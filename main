@@ -1,0 +1,48 @@
+from binarySearchTree import BTree
+
+
+def main():
+print("_____INSERT____")
+my_tree = BTree()
+my_list = [12, 5, 18, 2, 9, 15, 19, 17, 13]
+for i in my_list:
+    my_tree.tree_insert(i)
+print("INSERT DONE")
+
+print("______________TREE_INSET_TRY_Duplicate______________________")
+my_tree.tree_insert(12)
+
+print("____________GET_ROOT_KEY_____________________")
+print(my_tree.get_root())
+print("______________TREE_WALK______________________")
+my_tree.walk_tree(3)
+my_tree.walk_tree(2)
+my_tree.walk_tree()
+
+print("__________TREE_SEARCH_FROM_ROOT_______________")
+my_tree.search_tree_from_root(0, 15)
+my_tree.search_tree_from_root(1, 19)
+my_tree.search_tree_from_root(2)
+my_tree.search_tree_from_root(3)
+
+print("_____KEY_SUCCESSOR____")
+my_tree.tree_successor(12)
+
+print("_____KEY_PREDECESSOR____")
+my_tree.tree_predecessor(5)
+
+print("______________TREE_Delete______________________")
+my_tree.tree_delete(100)
+
+print("______________TREE_Delete______________________")
+my_tree.tree_delete(15)
+
+print("______________TREE_WALK______________________")
+my_tree.walk_tree()
+
+print("______________TREE_BURN______________________")
+my_tree.burn_tree()
+
+
+if __name__ == "__main__":
+    main()
