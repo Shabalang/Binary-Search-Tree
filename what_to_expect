@@ -1,0 +1,93 @@
+INSERT____
+INSERT DONE
+______________TREE_INSET_TRY_Duplicate______________________
+12  already Exist, can not add
+____________GET_ROOT_KEY_____________________
+12
+______________TREE_WALK______________________
+_____TREE_WALK_POSTORDER____
+2
+5
+9
+13
+15
+17
+18
+19
+12
+_____TREE_WALK_PREORDER____
+12
+2
+5
+9
+13
+15
+17
+18
+19
+_____TREE_WALK_INORDER____
+2
+5
+9
+12
+13
+15
+17
+18
+19
+__________TREE_SEARCH_FROM_ROOT_______________
+_____ITERATIVE_TREE_SEARCH____
+15
+_____RECURSIVE_TREE_SEARCH____
+19
+_____TREE_MAX____
+19
+_____TREE_MIN____
+2
+_____KEY_SUCCESSOR____
+13
+_____KEY_PREDECESSOR____
+2
+______________TREE_Delete______________________
+search Done
+Not Found
+______________TREE_Delete______________________
+search Done
+Delete Done
+______________TREE_WALK______________________
+_____TREE_WALK_INORDER____
+2
+5
+9
+12
+13
+17
+18
+19
+______________TREE_BURN______________________
+19
+search Done
+Delete Done
+18
+search Done
+Delete Done
+17
+search Done
+Delete Done
+13
+search Done
+Delete Done
+12
+search Done
+Delete Done
+9
+search Done
+Delete Done
+5
+search Done
+Delete Done
+2
+search Done
+Delete Done
+
+Process finished with exit code 0
