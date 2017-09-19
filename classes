@@ -1,0 +1,269 @@
+# simple node class
+class TreeNode:
+    # constructor
+    def __init__(self, data=None):
+        self.value = data
+        self.right_child = None
+        self.left_child = None
+        # only used in delete and transplant can also use predecessor and SUCCESSOR instead
+        self.prev_node = None
+
+# binary search tree class
+class BTree:
+    # constructor
+    def __init__(self):
+        self.root = TreeNode(None)
+        self.count = 0
+
+    # insert method
+    def tree_insert(self, value):
+        # make new node
+        new_node = TreeNode(value)
+        # pointer that walks the tree to find the spot
+        tracer = self.root
+        # follow the pointer that is walking the tree to find a spot, always one step behind
+        tracer_trailer = None
+        while tracer is not None:
+            tracer_trailer = tracer
+            if tracer.value is None:
+                break
+            else:
+                if new_node.value < tracer.value:
+                    tracer = tracer.left_child
+                elif new_node.value == tracer.value:
+                    print(value, " already Exist, can not add")
+                    break
+                else:
+                    tracer = tracer.right_child
+                self.count += 1
+        # Set Pointers that cause key to be inserted
+        if tracer_trailer.value is None:
+            self.root = new_node
+        elif new_node.value == tracer_trailer.value:
+            return False
+        elif new_node.value < tracer_trailer.value:
+            new_node.prev_node = tracer_trailer
+            tracer_trailer.left_child = new_node
+        else:
+            new_node.prev_node = tracer_trailer
+            tracer_trailer.right_child = new_node
+
+# delete method, uses the transplant method to move branches around
+    def tree_delete(self, key):
+        root = self.root
+        if root is not None:
+            node = self.tree_search_iterative(root, key)
+            print("search Done")
+            if node is not None:
+                # removing node has no left child
+                if node.left_child is None:
+                    self.transplant(node, node.right_child)
+                # removing node has no right child
+                elif node.right_child is None:
+                    self.transplant(node, node.left_child)
+                # removing node has two children
+                else:
+                    # find successor in that side
+                    temp = self.tree_min(node.right_child)
+                    if temp.prev_node != node:
+                        self.transplant(temp, temp.right_child)
+                        temp.right_child = node.right_child
+                        temp.right_child.prev_node = temp
+
+                    self.transplant(node, temp)
+                    temp.left_child = node.left_child
+                    temp.left_child.prev_node = temp
+                print("Delete Done")
+                self.count -= 1
+            else:
+                print("Not Found")
+
+    # used in delete; handles moving nodes and transplanting nodes
+    def transplant(self, first_node, second_node):
+        if first_node.prev_node is None:
+            self.root = second_node
+        elif first_node == first_node.prev_node.left_child:
+            first_node.prev_node.left_child = second_node
+        else:
+            first_node.prev_node.right_child = second_node
+        if second_node is not None:
+            second_node.prev_node = first_node.prev_node
+
+
+# --------in-order, pre-order, post-order tree walks-------------
+    def inorder_tree_walk(self, node):
+        if node is not None:
+            self.inorder_tree_walk(node.left_child)
+            print(node.value)
+            self.inorder_tree_walk(node.right_child)
+
+    def preorder_tree_walk(self, node):
+        if node is not None:
+            print(node.value)
+            self.inorder_tree_walk(node.left_child)
+            self.inorder_tree_walk(node.right_child)
+
+    def postorder_tree_walk(self, node):
+        if node is not None:
+            self.inorder_tree_walk(node.left_child)
+            self.inorder_tree_walk(node.right_child)
+            print(node.value)
+
+    # accessor to three different tree walks, will do it from root, default is in-order
+    def walk_tree(self, walk_type=None):
+        root = self.root
+        if walk_type == 3:
+            print("_____TREE_WALK_POSTORDER____")
+            self.postorder_tree_walk(root)
+        elif walk_type == 2:
+            print("_____TREE_WALK_PREORDER____")
+            self.preorder_tree_walk(root)
+        else:
+            print("_____TREE_WALK_INORDER____")
+            self.inorder_tree_walk(root)
+
+# --------recursive, iterative, max, min, search methods-------------
+    def tree_search_recursive(self, node, key):
+        if node is not None:
+            if node is not None:
+                if key == node.value:
+                    return key
+                if key < node.value:
+                    return self.tree_search_recursive(node.left_child, key)
+                else:
+                    return self.tree_search_recursive(node.right_child, key)
+        else:
+            print("NOT FOUND")
+
+    def tree_search_iterative(self, node, key):
+        if key is not None:
+            while True:
+                if node is None:
+                    return None
+                if key == node.value:
+                    break
+                if key < node.value:
+                    node = node.left_child
+                else:
+                    node = node.right_child
+            return node
+        else:
+            print("NOT FOUND")
+
+    def tree_max(self, node):
+        if node is not None:
+            while node.right_child is not None:
+                node = node.right_child
+            return node
+        else:
+            print("Tree is empty")
+
+    def tree_min(self, node):
+        if node is not None:
+            while node.left_child is not None:
+                node = node.left_child
+            return node
+        else:
+            print("Tree is empty")
+
+    # search for a key using iterative, recursive, or search for max and min from root, default is Iterative
+    def search_tree_from_root(self, search_type=None, key=None,):
+        root = self.root
+        if root is not None:
+            if search_type == 3:
+                print("_____TREE_MIN____")
+                found_node = self.tree_min(root)
+                if found_node is not None:
+                    print(found_node.value)
+                else:
+                    print("Not Found")
+
+            elif search_type == 2:
+                print("_____TREE_MAX____")
+                found_node = self.tree_max(root)
+                if found_node is not None:
+                    print(found_node.value)
+                else:
+                    print("Not Found")
+            elif search_type == 1:
+                print("_____RECURSIVE_TREE_SEARCH____")
+                found_node = self.tree_search_recursive(root, key)
+                if found_node is not None:
+                    print(found_node)
+                else:
+                    print("Not Found")
+            elif search_type == 0:
+                print("_____ITERATIVE_TREE_SEARCH____")
+                found_node = self.tree_search_iterative(root, key)
+                if found_node is not None:
+                    print(found_node.value)
+                else:
+                    print("Not Found")
+        else:
+            print("Tree is Empty")
+
+# successor and predecessor methods
+    def tree_successor(self, key):
+        root = self.root
+        if root is not None:
+            node = self.tree_search_iterative(root, key)
+
+            if node.right_child is not None:
+                found_node = self.tree_min(node.right_child)
+                if found_node is not None:
+                    print(found_node.value)
+                return found_node
+
+            prev = node.prev_node
+
+            while prev is not None and node == node.right_child:
+                node = prev
+                prev = prev.prev_node
+
+            if prev is not None:
+                print(prev.value)
+
+            return prev
+
+        else:
+            print("Tree is empty")
+
+    def tree_predecessor(self, key):
+        root = self.root
+        if root is not None:
+            node = self.tree_search_iterative(root, key)
+
+            if node.left_child is not None:
+                found_node = self.tree_max(node.left_child)
+                if found_node is not None:
+                    print(found_node.value)
+                return found_node
+
+            prev = node.prev_node
+
+            while prev is not None and node == node.left_child:
+                node = prev
+                prev = prev.prev_node
+
+            if prev is not None:
+                print(prev.value)
+
+            return prev
+        else:
+            print("Tree is empty")
+
+    def get_root(self):
+        return self.root.value
+
+    def __iter__(self):
+        return self.walk_tree()
+
+    def __len__(self):
+        return self.count
+
+    def burn_tree(self):
+        while self.root is not None:
+            highest_num = self.tree_max(self.root)
+            print(highest_num.value)
+            self.tree_delete(highest_num.value)
+            self.count -= 1
