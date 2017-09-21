@@ -1,4 +1,4 @@
-INSERT____
+_____INSERT____
 INSERT DONE
 ______________TREE_INSET_TRY_Duplicate______________________
 12  already Exist, can not add
@@ -7,23 +7,23 @@ ____________GET_ROOT_KEY_____________________
 ______________TREE_WALK______________________
 _____TREE_WALK_POSTORDER____
 2
-5
 9
+5
 13
-15
 17
-18
+15
 19
+18
 12
 _____TREE_WALK_PREORDER____
 12
-2
 5
+2
 9
-13
-15
-17
 18
+15
+13
+17
 19
 _____TREE_WALK_INORDER____
 2
