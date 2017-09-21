@@ -5,8 +5,8 @@ class TreeNode:
         self.value = data
         self.right_child = None
         self.left_child = None
-        # only used in delete and transplant can also use predecessor and SUCCESSOR instead
-        self.prev_node = None
+        self.prev_node = None  # only used in delete and transplant can also use predecessor and SUCCESSOR inited
+
 
 # binary search tree class
 class BTree:
@@ -36,7 +36,7 @@ class BTree:
                 else:
                     tracer = tracer.right_child
                 self.count += 1
-        # Set Pointers that cause key to be inserted
+
         if tracer_trailer.value is None:
             self.root = new_node
         elif new_node.value == tracer_trailer.value:
@@ -100,13 +100,13 @@ class BTree:
     def preorder_tree_walk(self, node):
         if node is not None:
             print(node.value)
-            self.inorder_tree_walk(node.left_child)
-            self.inorder_tree_walk(node.right_child)
+            self.preorder_tree_walk(node.left_child)
+            self.preorder_tree_walk(node.right_child)
 
     def postorder_tree_walk(self, node):
         if node is not None:
-            self.inorder_tree_walk(node.left_child)
-            self.inorder_tree_walk(node.right_child)
+            self.postorder_tree_walk(node.left_child)
+            self.postorder_tree_walk(node.right_child)
             print(node.value)
 
     # accessor to three different tree walks, will do it from root, default is in-order
